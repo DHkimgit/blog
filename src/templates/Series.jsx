@@ -88,23 +88,23 @@ const Series = ({ pageContext, data }) => {
 export default Series
 
 export const pageQuery = graphql`
-  query BlogSeriesBySeriesName($series: String) {
-    posts: allMarkdownRemark(
-      sort: { order: ASC, fields: [frontmatter___date] }
-      filter: { frontmatter: { series: { eq: $series } } }
-    ) {
-      nodes {
-        excerpt(pruneLength: 200, truncate: true)
-        fields {
-          slug
-        }
-        frontmatter {
-          date(formatString: "MMMM DD, YYYY")
-          update(formatString: "MMM DD, YYYY")
-          title
-          tags
-        }
+query BlogSeriesBySeriesName($series: String) {
+  posts: allMarkdownRemark(
+    sort: {frontmatter: {date: ASC}}
+    filter: {frontmatter: {series: {eq: $series}}}
+  ) {
+    nodes {
+      excerpt(pruneLength: 200, truncate: true)
+      fields {
+        slug
+      }
+      frontmatter {
+        date(formatString: "MMMM DD, YYYY")
+        update(formatString: "MMM DD, YYYY")
+        title
+        tags
       }
     }
   }
+}
 `

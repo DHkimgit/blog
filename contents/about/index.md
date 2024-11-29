@@ -1,55 +1,38 @@
 ---
-title: "This is about page ✋"
+title: "안녕하세요! 환영합니다. ✋"
 ---
 
-## English Guide
+## 소개
+안녕하세요! 저는 **백엔드 개발자를 꿈꾸는 대학생**입니다.
+개발을 좋아하지만 아직 진로에 대한 고민이 많은 평범한 학생의 성장 과정을 이 블로그에 담아가고자 합니다.  
+부족한 실력에서 출발하지만, 성장하는 과정을 기록하고자 해요.
 
-Hello! This section is dedicated to introducing your blog. Here, you can showcase various information to your visitors, such as a blog introduction, personal profile, resume, portfolio, and more.
+## 블로그를 만든 이유
 
-### Writing Guide
+개발을 공부하면서 **배운 내용을 정리하고, 스스로 성장하는 동력을 찾고자** 이 블로그를 시작했습니다.  
+제가 고민하는 이유는 다음과 같습니다.
+1. 배운 내용을 금방 잊어버리곤 합니다. 기록으로 보완하고 싶습니다.
+2. 흥미가 자주 바뀌어 깊게 파고들지 못했던 경험을 극복하고 싶습니다.
+3. 기나긴 여정에서 **동기와 의지**를 유지할 방법이 필요합니다.
 
-To edit this page, modify the `/contents/about/index.md` file. You can write it in the same way as any other post. The path to this file cannot be changed.
+블로그에 학습 과정을 정리하고 결과물을 남기면서 **지식을 더 오래 기억하고**, **꾸준히 공부하며**,  
+**자신의 성장을 숫자처럼 확인할 수 있는 공간**을 만들고자 합니다.
 
-The Markdown document for the About page only contains a single frontmatter called `title`. The `title` frontmatter will be displayed as the title at the top of the About page.
+## 블로그의 방향
 
-### Disabling the About Page
+### 지향하는 글
+- **문제를 해결한 과정**을 드러내는 글
+- **복잡한 로직을 설계하고 구현한 과정**을 설명하는 글
+- **기술적 이슈에 대한 고찰과 배운 점**이 담긴 글
+- **프로젝트 개발 과정**에서 의사결정을 설명하는 글
+- 학습한 내용을 **다른 사람도 이해하기 쉽게 정리한 글**
 
-```json
-module.exports = {
+지향하는 글이라 적긴 했지만 모든 글이 위와 같을 수는 없다고 생각합니다. 이 블로그는 저 자신의 학습 동기부여를 위한 목적이 가장 크기 때문에 단순히 공부한 내용을 정리한 글도 많을 것 같아요. 그럼에도 누구나 이해하기 쉽게, 제 생각을 조금이라도 담아서 작성하려고 합니다.
 
-  // ...
+태그를 활용해 **고찰이 담긴 글**과 **단순한 학습 흔적을 남긴 글**을 구분할 예정이에요!  
 
-  useAbout: false, // 👈
+이 블로그가 스스로에게는 발전의 기록이자, 누군가에게는 도움이 될 수 있는 공간이 되기를 바랍니다.
 
-  // ...
+---
 
-}
-```
-
-You can disable the About page by setting the `useAbout` value to false in the `blog-config.js` file. If disabled, the tab in the blog header will be hidden, and visitors will not be able to access this page via the `/about` URL.
-
-## 한국어 가이드
-
-안녕하세요. 이 곳은 블로그를 소개하기 위한 공간입니다. 블로그 또는 자신에 대한 소개부터 이력서, 포트폴리오 등 다양한 정보를 이곳에서 방문자들에게 보여줄 수 있습니다.
-
-### 작성 가이드
-
-이 페이지를 편집하려면, `/contents/about/index.md` 파일을 수정하면 됩니다. 다른 포스팅을 작성하는 것과 동일한 방식으로 작성할 수 있습니다. 이 파일의 경로는 변경할 수 없습니다.
-
-About 페이지의 마크다운 문서는 오직 `title` 이라는 하나의 frontmatter 만 가지고 있습니다. `title` frontmatter 는 About 페이지 상단 제목으로 표시됩니다.
-
-### 비활성화
-
-```json
-module.exports = {
-
-  // ...
-
-  useAbout: false, // 👈
-
-  // ...
-
-}
-```
-
-`blog-config.js` 파일의 `useAbout` 값을 `false` 로 설정하여 About 페이지를 비활성화 할 수 있습니다. 비활성화 된다면, 블로그 상단에 존재하는 탭이 숨겨지고, `/about` 경로로 이 페이지에 접속할 수도 없게 됩니다.
+부족하지만 꾸준히 나아가는 모습 지켜봐 주세요. 감사합니다! 😊
