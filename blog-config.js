@@ -2,7 +2,7 @@ module.exports = {
   title: "devtab",
   description: "안녕하세요!",
   author: "devtab",
-  siteUrl: "https://devhudi.github.io/gatsby-starter-hoodie/",
+  siteUrl: "https://devtab.netlify.app/",
   links: {
     github: "https://github.com/DHkimgit",
     blogger : "https://velog.io/@devtab/posts",
@@ -20,7 +20,7 @@ module.exports = {
   useAbout: true,
   // See https://giscus.app/
   giscus: {
-    repo: "devHudi/gatsby-starter-hoodie",
+    repo: "DHkimgit/blog",
     repoId: "MDEwOlJlcG9zaXRvcnkzNjk4NjMzNTg=",
     category: "Comments",
     categoryId: "DIC_kwDOFguqvs4ChwGy",
