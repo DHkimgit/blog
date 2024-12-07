@@ -1,5 +1,5 @@
 ---
-title: "[Java] 계약 기반 프로그래밍과 Template을 구현하는 Interface"
+title: "[Java] 계약 기반 프로그래밍과 Template을 이용한 범용 메서드 정의하기"
 description: "범용 메소드의 강건성 지키기: Template의 등장 배경"
 date: 2024-12-07
 update: 2024-12-07
@@ -9,7 +9,6 @@ tags:
 series: "Java"
 ---
 
-# 범용 메서드의 강건성
 ## Object 클래스 이용
 자바에서 범용 메서드의 강건성을 지키기 위해서 어떤 방법을 사용하고 있을까? 
 인자 두 개를 받아서 우선순위가 높은 것을 반환하는 간단한 범용 메서드를 구현해보자. 
@@ -71,6 +70,7 @@ public static <T> T max(T a, T b) {
 ```
 
 이와 같이 범용 함수를 정의하면 타입 인자로 지정한 타입만을 객체로 전달할 수 있고, 반환 타입의 값이 전달된 인자의 타입과 같아지므로 타입 변환이 필요 없다.
+
 하지만 어떤 타입 인자를 사용하는지 알 수 없기 때문에 타입 매개 변수 T를 이용할 경우 compareTo 메소드를 사용할 수 없다.
 이 문제를 해결하기 위해 Java는 범용 메소드를 최종적으로 다음과 같이 정의한다.
 
@@ -116,7 +116,11 @@ public static <T extends Comparable<? suprer T>> T max(T a, T b) {
 
 여기서 범용 타입으로 허용되는 클래스는 Comparable 인터페이스를 구현한 클래스뿐만 아니라, 해당 클래스의 상위 클래스에서 compareTo() 메서드를 구현한 경우도 포함된다. 이는 기존 클래스 계층 구조에서 더 유연한 비교 로직을 구현할 수 있게 해준다.
 
-### `Comparable<? suprer T>`의 의미
+
+그렇다면, Comparable 의 범용 타입을 `Comparable<T>`로 정의하면 어떻게 될까?
+
+### `? suprer T`의 의미
+다음과 같은 클래스가 있다고 가정하자.
 ```java
 class Animal implements Comparable<Animal> {
     private int age;
@@ -129,44 +133,38 @@ class Animal implements Comparable<Animal> {
 class Dog extends Animal {
     private String breed;
 }
+```
+
+- Animal 클래스는 Comparable를 구현하며 compareTo 메서드를 재정의 했다.
+- Animal 클래스를 상속받은 **Dog 클래스는 compareTo 메서드를 별도로 재정의 하지 않았다**.
+
+즉, Dog 클래스가 구현한 것은 `Comparable<Dog>`를 구현한 compareTo 메서드가 아니라 상속 관계에 의해 전달받은 `Comparable<Pet>`을 구현한 compareTo 메서드다. 
+
+따라서 아래 코드처럼 max 메서드를 호출할 경우 오류가 발생한다.
+
+```java
+public class Utils {
+    public static <T extends Comparable<T>> T max(T a, T b) {
+        return a.compareTo(b) >= 0 ? a : b;
+    }
+}
 
 public class Main {
     public static void main(String[] args) {
         Dog dog1 = new Dog();
         Dog dog2 = new Dog();
 
-        Dog maxDog = max(dog1, dog2);
+        Dog maxDog = Utils.<Dog>max(dog1, dog2); // 오류 발생
     }
 }
 ```
+Dog 클래스는 compareTo 메서드를 직접 정의하고 있지 않기 때문이다.
+Comparable 의 범용 타입을 다음과 같이 확장해주면 문제가 해결된다.
 
-만약 Dog 클래스에서 compareTo를 재정의 해야 할 경우 어떻게 해야 할까 ?
-
-```java
-// X
-@Override
-public int compareTo(Dog other)
-
-// O
-@Override
-public int compareTo(Animal other)
-```
-compareTo가 구현되어 있는 클래스를 상속하면서 compareTo를 재정의 하고 싶으면 재정의 문법에 따라서 재정의 메소드의 매개변수가 부모 타입이 된다.
-따라서 이 경우 인자로 받은 Animal 타입을 Dog 타입으로 형변환 해줘야 한다.
-
-```java
-@Override
-public int compareTo(Animal other) {
-    Dog dog = (Dog)other;
-    // ...
-}
-```
-
-```java
-public static <T extends Comparable<? suprer T>> T max(T a, T b) {
+```java 
+public static <T extends Comparable<? super T>> T max(T a, T b) {
     return a.compareTo(b) >= 0 ? a : b;
 }
 ```
 
-이 때문에 위 범용 메소드에서 `? super T`의 사용이 필요한 것이다. 이 경우 Dog 클래스가 구현하고 있는 인터페이스는 Comparable<Dog>가 아니라 Comparable<Animal> 이다.
-
+? super T는 T와 T의 상위 클래스에 대해 비교 로직을 지원하므로, Pet 클래스에서 상속받은 비교 기능을 사용할 수 있게 해준다.
