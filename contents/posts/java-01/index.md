@@ -5,6 +5,7 @@ date: 2024-12-07
 update: 2024-12-07
 tags:
   - Java
+  - 단순 지식
 series: "Java"
 ---
 
@@ -24,7 +25,7 @@ public static Objcet max(Object a, Object b) {}
 
 **Object 가 제공하는 public 메소드(스레드 관련 제외)** : `equals(), hashCode(), toString()`
 
-불행히도, Object 타입에는 비교 메서드가 정의되어 있지 않다. 비교가 아닌 다른 역할의 범용 메소드를 정의할 경우에도 유사한 문제가 발생한다.
+불행히도 Object 타입에는 비교 메서드가 정의되어 있지 않다. 비교가 아닌 다른 역할의 범용 메소드를 정의할 경우에도 유사한 문제가 발생한다.
 
 ## 인터페이스 이용 - 계약 기반 프로그래밍
 이 문제는 거꾸로 접근하여 해결할 수 있다. 즉, 비교 메소드가 선언되어 있는 객체들만 인자로 받으면 되는 것이다. 이를 위해 인터페이스를 사용할 수 있다.
@@ -38,7 +39,7 @@ Java의 Comparable 인터페이스엔 compareTo() 메서드가 선언되어 있�
 
 그런데 위와 같이 범용 함수를 만들면 두가지 문제점이 발생한다.
 
-1. a와 b의 타입 문제
+### 1. a와 b의 타입 문제
 ```java
 public class Dog impelments Comparable<Dog> {}
 Dog dog = new Dog();
@@ -51,7 +52,7 @@ var result = max(dog, cat); // ?
 
 범용 함수 max는 같은 종류의 두 객체를 비교하기 위한 것인데, 지금과 같은 방식은 a와 b에 전달된 객체가 같은 타입이라는 것을 보장해 주지 못한다.
 
-2. 반환 타입의 문제
+### 2. 반환 타입의 문제
 ```java
 Dog dogA = new Dog();
 Dog dogB = new Dog();
@@ -99,7 +100,7 @@ public static <T extends Comparable<? super T>> void printList(List<? extends T>
 
 #### Consumer-Super
 데이터를 소비(쓰기)하는 메서드의 경우 super 키워드를 사용한다. 
-```javas
+```java
 public static <T> void copyList(List<? super T> dest, List<? extends T> src) {
     dest.addAll(src);
 }
@@ -115,6 +116,7 @@ public static <T extends Comparable<? suprer T>> T max(T a, T b) {
 
 여기서 범용 타입으로 허용되는 클래스는 Comparable 인터페이스를 구현한 클래스뿐만 아니라, 해당 클래스의 상위 클래스에서 compareTo() 메서드를 구현한 경우도 포함된다. 이는 기존 클래스 계층 구조에서 더 유연한 비교 로직을 구현할 수 있게 해준다.
 
+### `Comparable<? suprer T>`의 의미
 ```java
 class Animal implements Comparable<Animal> {
     private int age;
@@ -133,10 +135,38 @@ public class Main {
         Dog dog1 = new Dog();
         Dog dog2 = new Dog();
 
-        // PECS 규칙 덕분에 이 메서드 호출이 가능해진다.
         Dog maxDog = max(dog1, dog2);
     }
 }
 ```
 
+만약 Dog 클래스에서 compareTo를 재정의 해야 할 경우 어떻게 해야 할까 ?
+
+```java
+// X
+@Override
+public int compareTo(Dog other)
+
+// O
+@Override
+public int compareTo(Animal other)
+```
+compareTo가 구현되어 있는 클래스를 상속하면서 compareTo를 재정의 하고 싶으면 재정의 문법에 따라서 재정의 메소드의 매개변수가 부모 타입이 된다.
+따라서 이 경우 인자로 받은 Animal 타입을 Dog 타입으로 형변환 해줘야 한다.
+
+```java
+@Override
+public int compareTo(Animal other) {
+    Dog dog = (Dog)other;
+    // ...
+}
+```
+
+```java
+public static <T extends Comparable<? suprer T>> T max(T a, T b) {
+    return a.compareTo(b) >= 0 ? a : b;
+}
+```
+
+이 때문에 위 범용 메소드에서 `? super T`의 사용이 필요한 것이다. 이 경우 Dog 클래스가 구현하고 있는 인터페이스는 Comparable<Dog>가 아니라 Comparable<Animal> 이다.
 
