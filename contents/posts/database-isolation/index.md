@@ -1,8 +1,8 @@
 ---
 title: "[DB] ACID - Isolation(고립성)과 읽기 현상(Read Phenomena), 격리수준"
 description: "고립성과 관련된 것들"
-date: 2024-12-19
-update: 2024-12-19
+date: 2024-12-20
+update: 2024-12-20
 tags:
   - DB
   - 단순 지식
@@ -89,7 +89,7 @@ Read Uncommitted는 가장 낮은 격리 수준으로 트랜잭션이 **다른 �
 |-|-------------|--------------|----------------------|--------------|
 |Read commited| 불가능         | 가능           | 가능                   | 가능           |
 
-Read Committed는 트랜잭션이 커밋된 데이터만 읽을 수 있도록 보장하는 격리 수준이다. Dirty Read는 방지되지만 커밋된 데이터는 읽을 수 있기 때문에 Non-repeatable Read와 Phantom Read 현상이 발생한다.
+Read Committed는 트랜잭션이 커밋된 데이터만 읽을 수 있도록 보장하는 격리 수준이다. Dirty Read는 방지되지만 다른 트랜잭션에서 커밋된 데이터는 읽을 수 있기 때문에 Non-repeatable Read와 Phantom Read 현상이 발생한다.
 
 대부분의 데이터베이스에서 기본값으로 사용되는 격리수준이다.
 
