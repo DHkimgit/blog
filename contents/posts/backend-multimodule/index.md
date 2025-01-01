@@ -7,6 +7,7 @@ tags:
   - java
   - spring
   - 단순 지식
+  - 멀티모듈
 series: "Backend Engineering"
 ---
 
