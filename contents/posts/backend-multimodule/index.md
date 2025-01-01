@@ -287,6 +287,8 @@ public interface JpaPackageLocation {
 - [도메인 모듈 분리 시 Transaction + JPA 활용 방안](https://www.youtube.com/watch?v=18C2A56ialY)
 - [Gradle 멀티모듈 네이밍 컨벤션, 공식문서](https://docs.gradle.org/current/userguide/multi_project_builds.html#naming_recommendations)
 
-**멀티 모듈을 적용한 프로젝트 사례**
-- [CollaBu/pennyway](https://github.com/CollaBu/pennyway-was)
-- [Team-Smeme/Smeme](https://github.com/Team-Smeme/Smeme-server-renewal)
+[//]: # (**멀티 모듈을 적용한 프로젝트 사례**)
+
+[//]: # (- [CollaBu/pennyway]&#40;https://github.com/CollaBu/pennyway-was&#41;)
+
+[//]: # (- [Team-Smeme/Smeme]&#40;https://github.com/Team-Smeme/Smeme-server-renewal&#41;)
