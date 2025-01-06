@@ -1,8 +1,8 @@
 ---
 title: "[KOIN] 채팅 시스템 아키텍쳐 구상"
 description: "벡엔드"
-date: 2024-01-06
-update: 2024-01-06
+date: 2025-01-06
+update: 2025-01-06
 tags:
   - java
   - spring
