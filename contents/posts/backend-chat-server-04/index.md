@@ -1,8 +1,8 @@
 ---
 title: "[KOIN] 오라클 클라우드에 프로젝트 배포"
 description: "벡엔드"
-date: 2025-01-12
-update: 2025-01-12
+date: 2025-01-11
+update: 2025-01-11
 tags:
   - java
   - spring
