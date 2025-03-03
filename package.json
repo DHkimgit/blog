@@ -7,6 +7,7 @@
   "author": "Hudi",
   "dependencies": {
     "@giscus/react": "^3.0.0",
+    "ajv": "^8.17.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^7.18.0",
