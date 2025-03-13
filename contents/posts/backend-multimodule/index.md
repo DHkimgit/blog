@@ -265,6 +265,29 @@ public interface JpaPackageLocation {
 
 - 모듈 간 의존성을 명확히 정의하고 실행 시점의 컨텍스트 로딩 과정을 검토.
 
+### SWAGGER Failed to load API definition 500
+
+멀티 모듈 리펙토링 후 SWAGGER 페이지 접속 시 다음과 같은 오류 메시지를 뱉으면서 접속이 안되는 현상이 발생했다.
+
+> java.lang.NoSuchMethodError: 'void org.springframework.web.method.ControllerAdviceBean.<init>(java.lang.Object)'
+
+![img_4.png](img_4.png)
+
+[참고](https://dev-meung.tistory.com/entry/%ED%95%B4%EC%BB%A4%ED%86%A4-HY-THON-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85-Swagger-500-%EC%97%90%EB%9F%AC-Failed-to-load-API-definition)
+
+찾아본 결과 전역 오류 헨들링을 위한 GlobalExceptionHandler의 @RestControllerAdvice가 springdoc 라이브러리와 충돌을 일으키는 것이 원인이었다. GlobalExceptionHandler을 주석 처리하면 제대로 접근된다(...)
+
+GlobalExceptionHandler을 사용하지 않을 수는 없으니 여러가지 해결책을 시도해봤는데 아쉽게도 전부 제대로 동작하지 않았다. 
+
+- 공식문서 해결방법 : X
+![img_5.png](img_5.png)
+
+- 어노테이션에 @ControllerAdvice가 적용될 부분 명시 : X
+```java
+@RestControllerAdvice(annotations = {RestController.class}, basePackages = {"io.devtab.popspot"})
+```
+
+기존 스프링 부트 버전은 3.4.3 이었고, springdoc의 버전은 2.4.0 이었는데, 결국 프로젝트의 버전을 각각 3.4.1과 2.7.0으로 바꿨더니 제대로 동작했다. 아무래도 서로 궁합이 맞는 버전이 있는 것 같다.
 
 ## 참고
 **멀티 모듈 설계**
